@@ -1,0 +1,4 @@
+{
+  "critical_interfaces": ["GigabitEthernet0/1"],
+  "flap_threshold": 10
+}
