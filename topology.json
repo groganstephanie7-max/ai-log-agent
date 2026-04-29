@@ -1,0 +1,14 @@
+{
+  "Core-Router-1": {
+    "neighbors": ["Firewall-1", "Backup-WAN"]
+  },
+  "Firewall-1": {
+    "neighbors": ["Client-Site-A"]
+  },
+  "Client-Site-A": {
+    "neighbors": []
+  },
+  "Backup-WAN": {
+    "neighbors": []
+  }
+}
