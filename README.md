@@ -1,70 +1,60 @@
 # AI Log Monitoring Agent
 
-A lightweight, config-driven network log monitoring agent built in Python.
+An AIOps-inspired Python project that monitors network interface logs, detects instability, predicts potential outages, and simulates intelligent failover decisions.
 
-## How to Run
+## 🧩 System Architecture
 
-Ensure you have Python 3 installed.
+```mermaid
+flowchart TD
+    A[logs.txt] --> B[Log Parser (Regex)]
+    B --> C[State Tracker]
+    C --> D[Instability Detection]
+    D --> E[Time-Aware Analysis]
+    E --> F[Risk Assessment]
+    F --> G{Decision Engine}
 
-```bash
-py agent.py
+    G -->|HIGH Risk| H[Failover Simulation]
+    G -->|MEDIUM Risk| I[Monitor]
+    G -->|LOW Risk| J[No Action]
+
+    H --> K[audit_log.txt]
+    I --> K
+    J --> K
 ```
 
-Make sure `logs.txt` and `rules.json` are in the same directory as `agent.py`.
+---
 
-## Overview
-This project is a Python-based log monitoring agent that detects network interface state changes from Cisco IOS logs. It identifies critical failures and flapping behavior, and records structured audit logs for analysis.
+## 🚀 What It Does
 
-## Features
-- Parses Cisco IOS log files
-- Detects interface up/down events using regex
-- Classifies severity (INFO, WARNING, CRITICAL)
-- Identifies flapping interfaces based on configurable thresholds
-- Outputs structured JSON audit logs
-- Config-driven design using external rules.json
+- Parses Cisco-style network logs using regex
+- Detects interface up/down state changes
+- Tracks historical behavior per interface
+- Identifies instability and flapping patterns
+- Applies time-aware prediction logic
+- Evaluates backup path availability
+- Simulates automated failover decisions
+- Logs structured audit events in JSON format
 
-## How It Works
-1. Reads log data from `logs.txt`
-2. Matches interface state changes using regex
-3. Tracks event history per interface
-4. Determines severity based on:
-   - Interface importance
-   - Event frequency (flapping detection)
-5. Prints alerts to console
-6. Writes structured events to `audit_log.txt`
+---
 
-## Configuration
-Edit `rules.json` to control behavior:
-
-```json
-{
-  "critical_interfaces": ["GigabitEthernet0/1"],
-  "flap_threshold": 3
-}
-```
-
-## Example Output
+## 📊 Example Output
 
 ```text
-CRITICAL: GigabitEthernet0/1 is DOWN (events=1)
-INFO: GigabitEthernet0/1 is UP (events=2)
-CRITICAL (FLAPPING): GigabitEthernet0/1 is DOWN (events=3)
-CRITICAL (FLAPPING): GigabitEthernet0/1 is UP (events=4)
+Risk Level: HIGH
+Reason: Firewall-1 is unstable and may impact Client-Site-A
+Avg Time Between Events: 0.00s
+Backup Status: Backup-WAN is DOWN
+Backup Status: LTE-Failover is UP
+Recommended Action: Prepare failover to LTE-Failover
+ACTION: FAILOVER TRIGGERED → LTE-Failover
+Prediction: HIGH instability — likely outage soon
 ```
 
-## Technologies Used
+## 🧠 Key Feature: Time-Aware Intelligence
 
-- Python
-- Regex
-- JSON logging
+This system evaluates not just how often failures occur, but how quickly they happen.
 
-## Future Improvements
+- Rapid state changes → triggers failover  
+- Slower instability → monitored without overreacting  
 
-- Time-based flapping detection
-- Real-time log streaming
-- Alert integrations (Slack, email)
-- Web dashboard
-
-## Author
-
-Stephanie Grogan
+This reflects real-world NOC (Network Operations Center) decision-making.
