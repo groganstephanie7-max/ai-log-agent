@@ -6,21 +6,37 @@ An AIOps-inspired Python project that monitors network interface logs, detects i
 
 ```mermaid
 flowchart TD
-    A[logs.txt] --> B[Log Parser (Regex)]
-    B --> C[State Tracker]
-    C --> D[Instability Detection]
-    D --> E[Time-Aware Analysis]
-    E --> F[Risk Assessment]
-    F --> G{Decision Engine}
 
-    G -->|HIGH Risk| H[Failover Simulation]
-    G -->|MEDIUM Risk| I[Monitor]
-    G -->|LOW Risk| J[No Action]
+    subgraph Input
+        A[logs.txt]
+    end
 
-    H --> K[audit_log.txt]
-    I --> K
-    J --> K
+    subgraph Processing
+        B[Log Parser - Regex]
+        C[State Tracker]
+        D[Instability Detection]
+        E[Time Aware Analysis]
+    end
+
+    subgraph DecisionEngine[Decision Engine]
+        F[Risk Assessment]
+        G{Decision Engine}
+    end
+
+    subgraph Output
+        H[Failover Simulation]
+        I[Monitor]
+        J[No Action]
+        K[audit_log.txt]
+    end
+
+    A --> B --> C --> D --> E --> F --> G
+
+    G -->|HIGH| H --> K
+    G -->|MEDIUM| I --> K
+    G -->|LOW| J --> K
 ```
+
 
 ---
 
